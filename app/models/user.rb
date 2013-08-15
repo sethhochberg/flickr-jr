@@ -1,10 +1,14 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
-  validates :email, :name, presence: true
-  validates :email, uniqueness: true
 
   include BCrypt
+
+  has_many :photos, :through => :albums
+  has_many :albums
+
+  validates :email, :name, presence: true
+  validates :email, uniqueness: true
 
   def self.authenticate(email, password)
     user = find_by_email(email)
