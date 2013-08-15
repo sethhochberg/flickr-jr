@@ -36,3 +36,13 @@ Dir[APP_ROOT.join('app', 'uploaders', '*.rb')].each { |file| require file }
 
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
+
+
+# Now that we've loaded ActiveRecord, config Carrierwave
+require 'carrierwave/orm/activerecord'
+
+CarrierWave.configure do |config|
+  config.permissions = 0666
+  config.directory_permissions = 0777
+  config.storage = :file
+end
